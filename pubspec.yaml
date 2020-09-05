@@ -30,6 +30,7 @@ dependencies:
   http: ^0.12.2
   amazon_cognito_identity_dart_2: ^0.1.16
   flutter_web_auth: ^0.2.4
+  jwt_decode: ^0.1.0
 
 dev_dependencies:
   flutter_test:
