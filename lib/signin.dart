@@ -98,11 +98,15 @@ class SigninScreen extends StatelessWidget {
                   mainAxisAlignment: MainAxisAlignment.spaceEvenly,
                   children: [
                     OutlineButton(
-                      onPressed: () {},
+                      onPressed: () {
+                        // signup.dartのGoogleで登録と同じ
+                      },
                       child: Text('Google でログイン'),
                     ),
                     OutlineButton(
-                      onPressed: () {},
+                      onPressed: () {
+                        // signup.dartのLINEで登録と同じ
+                      },
                       child: Text('LINE でログイン'),
                     ),
                   ],
