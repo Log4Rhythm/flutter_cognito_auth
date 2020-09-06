@@ -4,6 +4,7 @@ import 'package:flutter_cognito_auth/reset_password.dart';
 import 'package:flutter_cognito_auth/signup_confirm.dart';
 import 'package:flutter_cognito_auth/signin.dart';
 import 'package:flutter_cognito_auth/signup.dart';
+import 'package:google_fonts/google_fonts.dart';
 
 void main() {
   runApp(MyApp());
@@ -26,6 +27,9 @@ class MyApp extends StatelessWidget {
       theme: ThemeData(
         primarySwatch: Colors.blue,
         visualDensity: VisualDensity.adaptivePlatformDensity,
+        textTheme: GoogleFonts.notoSansTextTheme(
+          Theme.of(context).textTheme,
+        ),
       ),
       home: SignupScreen(),
     );

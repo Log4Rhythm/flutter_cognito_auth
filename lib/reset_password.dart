@@ -47,7 +47,7 @@ class ResetPasswordScreen extends StatelessWidget {
                   onPressed: () {},
                   color: Theme.of(context).primaryColor,
                   child: Text(
-                    '送信',
+                    '作成',
                     style: TextStyle(color: Colors.white),
                   ),
                 ),
