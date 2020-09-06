@@ -1,6 +1,11 @@
+import 'package:amazon_cognito_identity_dart_2/cognito.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter_cognito_auth/auth.dart';
 
 class SignupScreen extends StatelessWidget {
+  final _emailController = TextEditingController();
+  final _passwordController = TextEditingController();
+
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -18,6 +23,7 @@ class SignupScreen extends StatelessWidget {
                 ),
                 SizedBox(height: 48),
                 TextField(
+                  controller: _emailController,
                   keyboardType: TextInputType.emailAddress,
                   decoration: InputDecoration(
                     hintText: 'Email',
@@ -28,6 +34,7 @@ class SignupScreen extends StatelessWidget {
                 ),
                 SizedBox(height: 16),
                 TextField(
+                  controller: _passwordController,
                   obscureText: true,
                   decoration: InputDecoration(
                     hintText: 'Password',
@@ -38,8 +45,18 @@ class SignupScreen extends StatelessWidget {
                 ),
                 SizedBox(height: 32),
                 RaisedButton(
-                  onPressed: () {
-                    Navigator.pushNamed(context, '/signup_confirm');
+                  onPressed: () async {
+                    String userEmail = _emailController.text;
+                    String userPassword = _passwordController.text;
+
+                    try {
+                      CognitoUserPoolData cognitoUserPoolData =
+                          await cognitoUserPool.signUp(userEmail, userPassword);
+                      Navigator.pushNamed(context, '/signup_confirm',
+                          arguments: cognitoUserPoolData);
+                    } on CognitoClientException catch (e) {
+                      print(e);
+                    }
                   },
                   color: Theme.of(context).primaryColor,
                   child: Text(

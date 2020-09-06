@@ -1,8 +1,13 @@
+import 'package:amazon_cognito_identity_dart_2/cognito.dart';
 import 'package:flutter/material.dart';
 
 class SignupConfirmScreen extends StatelessWidget {
+  final _registrationKeyController = TextEditingController();
+
   @override
   Widget build(BuildContext context) {
+    CognitoUserPoolData cognitoUserPoolData =
+        ModalRoute.of(context).settings.arguments;
     return Scaffold(
       resizeToAvoidBottomInset: false,
       body: SafeArea(
@@ -24,6 +29,7 @@ class SignupConfirmScreen extends StatelessWidget {
                 ),
                 SizedBox(height: 48),
                 TextField(
+                  controller: _registrationKeyController,
                   keyboardType: TextInputType.number,
                   decoration: InputDecoration(
                     hintText: 'Registration key',
@@ -34,8 +40,16 @@ class SignupConfirmScreen extends StatelessWidget {
                 ),
                 SizedBox(height: 32),
                 RaisedButton(
-                  onPressed: () {
-                    Navigator.pushNamed(context, '/signin');
+                  onPressed: () async {
+                    String userRegistrationKey =
+                        _registrationKeyController.text;
+                    try {
+                      await cognitoUserPoolData.user
+                          .confirmRegistration(userRegistrationKey);
+                      Navigator.pushNamed(context, '/signin');
+                    } on CognitoClientException catch (e) {
+                      print(e);
+                    }
                   },
                   color: Theme.of(context).primaryColor,
                   child: Text(

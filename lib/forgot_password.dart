@@ -1,6 +1,10 @@
+import 'package:amazon_cognito_identity_dart_2/cognito.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter_cognito_auth/auth.dart';
 
 class ForgotPasswordScreen extends StatelessWidget {
+  final _emailController = TextEditingController();
+
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -24,6 +28,7 @@ class ForgotPasswordScreen extends StatelessWidget {
                 ),
                 SizedBox(height: 48),
                 TextField(
+                  controller: _emailController,
                   keyboardType: TextInputType.emailAddress,
                   decoration: InputDecoration(
                     hintText: 'Email',
@@ -32,8 +37,18 @@ class ForgotPasswordScreen extends StatelessWidget {
                 ),
                 SizedBox(height: 32),
                 RaisedButton(
-                  onPressed: () {
-                    Navigator.pushNamed(context, '/reset_password');
+                  onPressed: () async {
+                    String userEmail = _emailController.text;
+
+                    CognitoUser cognitoUser =
+                        CognitoUser(userEmail, cognitoUserPool);
+                    try {
+                      await cognitoUser.forgotPassword();
+                      Navigator.pushNamed(context, '/reset_password',
+                          arguments: cognitoUser);
+                    } catch (e) {
+                      print(e);
+                    }
                   },
                   color: Theme.of(context).primaryColor,
                   child: Text(
