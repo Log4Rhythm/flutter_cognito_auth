@@ -66,12 +66,12 @@ class SigninScreen extends StatelessWidget {
                       final cognitoUserSession = await cognitoUser
                           .authenticateUser(authenticationDetails);
 
+                      // 各種トークンを取得
                       final refreshToken =
-                          cognitoUserSession.getRefreshToken().toString();
-                      final idToken =
-                          cognitoUserSession.getIdToken().toString();
+                          cognitoUserSession.getRefreshToken().token;
+                      final idToken = cognitoUserSession.getIdToken().jwtToken;
                       final accessToken =
-                          cognitoUserSession.getAccessToken().toString();
+                          cognitoUserSession.getAccessToken().jwtToken;
                       print(refreshToken);
                       print(idToken);
                       print(accessToken);
